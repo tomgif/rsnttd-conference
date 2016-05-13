@@ -29,5 +29,13 @@
     "gulp"
   ],
   "author": "tomgif",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomgif/rsnttd-conference.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tomgif/rsnttd-conference/issues"
+  },
+  "homepage": "https://github.com/tomgif/rsnttd-conference#readme"
 }
