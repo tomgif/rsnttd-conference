@@ -50,5 +50,13 @@
 @import "../../node_modules/bootstrap/less/utilities";
 @import "../../node_modules/bootstrap/less/responsive-utilities";
 
+@import "../../node_modules/font-awesome/less/font-awesome";
+
+.fa-mixin-icon(@icon){
+	.fa;
+	@var: "fa-var-@{icon}";
+	&:before { content: @@var; }
+}
+
 //Custom
 @import "partials/app";

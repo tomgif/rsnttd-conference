@@ -3,6 +3,10 @@ var conference = {
 		conference.fixedFooter();
 		$(window).scroll(function(){
 			conference.fixedFooter();
+			conference.mobileHeader();
+		});
+		$('.show-sidebar').click(function(){
+			$('.page').toggleClass('page--sidebar-visible');
 		});
 	},
 	fixedFooter: function(){
@@ -16,6 +20,16 @@ var conference = {
 			$('.footer').addClass('footer--fixed');
 		else
 			$('.footer').removeClass('footer--fixed');
+	},
+	mobileHeader: function(){
+		var headerStrip = $('.header__row').height(),
+			toolbar = $('.auth').height()
+			toolbarTop = headerStrip - toolbar,
+			documentTop = $(document).scrollTop();
+		if ((screen.width < 750) && (documentTop > toolbarTop))
+			$('.header').addClass('header--fixed');
+		else
+			$('.header').removeClass('header--fixed');
 	}
 }
 
