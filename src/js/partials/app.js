@@ -1,6 +1,7 @@
 var conference = {
 	init: function () {
 		conference.fixedFooter();
+		conference.mobileHeader();
 		$(window).scroll(function(){
 			conference.fixedFooter();
 			conference.mobileHeader();
@@ -9,6 +10,7 @@ var conference = {
 			$('.page').toggleClass('page--sidebar-visible');
 			if (!$('.header').hasClass('header--fixed'))
 				$('.header').toggleClass('header--fixed');
+			conference.mobileHeader();
 		});
 	},
 	fixedFooter: function(){
