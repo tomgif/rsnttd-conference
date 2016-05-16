@@ -22,9 +22,7 @@ html, body{height: 100%}
 	min-height: 100%;
 	height: auto;
 	padding-bottom: 250px;
-	@media (max-width: @screen-xs-max){
-		padding-bottom: 0;
-	}
+	@media (max-width: @screen-xs-max){padding-bottom: 0}
 }
 .header{
 	&__wrapper{.container()}
@@ -39,6 +37,7 @@ html, body{height: 100%}
 			padding: 10px;
 			text-align: center;
 			.make-md-column(2);
+			.make-sm-column(2);
 			.make-xs-column(3);
 		}
 	}
@@ -46,10 +45,12 @@ html, body{height: 100%}
 		font-size: 18px;
 		padding: 15px 0;
 		.make-md-column(8);
+		.make-sm-column(7);
 		.make-xs-column(9);
 	}
 	.auth{
 		.make-md-column(2);
+		.make-sm-column(3);
 		a, input{
 			margin: 10px;
 			text-transform: uppercase;
@@ -78,6 +79,7 @@ html, body{height: 100%}
 			i{.fa-mixin-icon(bars)}
 			.hidden-lg;
 			.hidden-md;
+			.hidden-sm;
 		}
 		@media (max-width: @screen-xs-max){
 			width: 100%;
@@ -93,10 +95,11 @@ html, body{height: 100%}
 		border-bottom: 6px solid @secondary;
 		box-shadow: 0 5px 0 0 @base;
 		@media (max-width: @screen-xs-max){display: none}
+		@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max){height: auto}
 	}
 	.skew{
 		margin-bottom: 100px;
-		@media(max-width: @screen-xs-max){margin: 0}
+		@media (max-width: @screen-xs-max){margin: 0}
 	}
 }
 
@@ -110,7 +113,6 @@ html, body{height: 100%}
 	padding-top: 20px;
 	a{color: @base}
 	.active a{color: @dark}
-
 }
 
 .skew{
@@ -140,23 +142,6 @@ html, body{height: 100%}
 }
 
 .menu{
-	&--bottom{
-		background-color: @base;
-		text-align: center;
-		&__item{
-			text-transform: uppercase;
-			color: @secondary;
-			display: inline-block;
-			margin: 10px 30px;
-			&:hover, &:focus, &:active{
-				text-decoration: underline;
-				color: @secondary;
-			}
-		}
-		@media(max-width: @screen-xs-max){
-			display: none;
-		}
-	}
 	&--main{
 		text-align: center;
 		&__item{
@@ -175,8 +160,35 @@ html, body{height: 100%}
 				border-radius: 50%;
 				padding: 20px;
 				margin: 5px;
+				img{
+					width: 40px;
+					height: 40px;
+					@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max){
+						width: 20px;
+						height: 20px;
+					}
+				}
 			}
 			.name{text-transform: uppercase}
+			@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max){width: 80px}
+		}
+	}
+	&--bottom{
+		background-color: @base;
+		text-align: center;
+		&__item{
+			text-transform: uppercase;
+			color: @secondary;
+			display: inline-block;
+			margin: 10px 30px;
+
+			&:hover, &:focus, &:active{
+				text-decoration: underline;
+				color: @secondary;
+			}
+		}
+		@media(max-width: @screen-xs-max){
+			display: none;
 		}
 	}
 	&--sidebar{
@@ -252,11 +264,13 @@ html, body{height: 100%}
 			text-decoration: underline;
 		}
 		@media(max-width: @screen-xs-max){padding: 0 10px 20px 10px}
+		@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max){padding: 0 10px 20px 10px}
 	}
 	@media (max-width: @screen-xs-max){
 		border: 0;
 		padding: 0;
 	}
+	@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max){border-right: 0}
 }
 .sidebar{
 	position: relative;
@@ -270,7 +284,7 @@ html, body{height: 100%}
 		float: right;
 		width: 315px;
 		margin-right: -315px;
-		@media(max-width: @screen-xs-max){
+		@media(max-width: @screen-sm-max){
 			float: left;
 			clear: both;	
 			width: 100%;
@@ -309,9 +323,9 @@ html, body{height: 100%}
 		clear: both;
 		margin-top: 15px;
 		border: 1px solid @base;
-		@media(max-width: @screen-xs-max){display: inline-block}
+		@media(max-width: @screen-sm-max){display: inline-block}
 	}
-	@media(max-width: @screen-xs-max){text-align: center}
+	@media (max-width: @screen-xs-max){text-align: center}
 }
 .participants{
 	.make-row();
@@ -346,14 +360,13 @@ html, body{height: 100%}
 			left: 0;
 			bottom: -1px;
 			padding-bottom: 1px;
+			border-top: 6px solid @secondary;
 		}
 	}
 	&__wrapper{
 		.container();
 		padding-top: 75px;
-		@media (max-width: @screen-xs-max){
-			padding-top: 0;
-		}
+		@media (max-width: @screen-xs-max){padding-top: 0}
 	}
 	.contacts{
 		font-size: 12px;
@@ -377,7 +390,7 @@ html, body{height: 100%}
 	}
 }
 
-@media(max-width: @screen-xs-max){
+@media(max-width: @screen-sm-max){
 	.page--sidebar-visible{
 		overflow: hidden;
 		.header .auth .show-sidebar{
@@ -406,5 +419,11 @@ html, body{height: 100%}
 			z-index: 10;
 			transition: background 1s ease;
 		}
+	}
+}
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max){
+	.content--left-sidebar .sidebar--right{
+		left: -250px;
+		width: ~"calc(100% + 250px)";	
 	}
 }
