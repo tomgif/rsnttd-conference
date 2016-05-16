@@ -70,13 +70,17 @@ html, body{height: 100%}
 				background-color: @secondary;
 				transition: background-color .5s ease;
 			}
+			@media (max-width: @screen-xs-max){display: none}
 		}
 		.show-sidebar{
+			float: right;
+			font-size: 24px;
 			i{.fa-mixin-icon(bars)}
 			.hidden-lg;
 			.hidden-md;
 		}
 		@media (max-width: @screen-xs-max){
+			width: 100%;
 			clear: both;
 		}
 	}
@@ -374,19 +378,32 @@ html, body{height: 100%}
 }
 
 @media(max-width: @screen-xs-max){
-	.page--sidebar-visible .sidebar--left{
-		left: 0;
-		width: 100%;	
+	.page--sidebar-visible{
+		.header .auth .show-sidebar{
+			i{.fa-mixin-icon(times)}
+		}
+		.sidebar--left{
+			background: @base;
+			padding-top: 50px;
+			left:0;
+			top:0;
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			z-index: 9;
+		}
 	}
-	.page .header--fixed .auth{
+	.header--fixed .auth{
 		position: relative;
 		&__wrapper{
 			background: @base;
 			position: fixed;
 			top: 0;
-			z-index: 10;
-			width: 100%;
 			left: 0;
+			width: 100%;
+			padding: 0 15px;
+			z-index: 10;
+			transition: all 1s ease;
 		}
 	}
 }
