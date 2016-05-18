@@ -11,7 +11,8 @@ var gulp = require('gulp'),
     pngquant = require('imagemin-pngquant'),
     rimraf = require('rimraf'),
     browserSync = require("browser-sync"),
-    reload = browserSync.reload;
+    reload = browserSync.reload,
+    deploy = require('gulp-gh-pages');
 
 var path = {
     build: { //Тут мы укажем куда складывать готовые после сборки файлы
@@ -121,6 +122,14 @@ gulp.task('webserver', function () {
 
 gulp.task('clean', function (cb) {
     rimraf(path.clean, cb);
+});
+
+/**
+ * Push build to gh-pages
+ */
+gulp.task('deploy', function () {
+  return gulp.src("./build/**/*")
+    .pipe(deploy())
 });
 
 gulp.task('default', ['build', 'webserver', 'watch']);

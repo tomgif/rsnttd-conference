@@ -52,7 +52,7 @@ html, body{height: 100%}
 		.make-md-column(2);
 		.make-sm-column(3);
 		a, input{
-			margin: 10px;
+			margin: 10px 20px;
 			text-transform: uppercase;
 		}
 		a{
@@ -62,9 +62,9 @@ html, body{height: 100%}
 			float: left;
 			&:hover{text-decoration: none}
 		}
-		input{
+		input[type=text]{
 			color: @grey;
-			padding: 4px;
+			padding: 4px 24px 4px 4px;
 			border: 1px solid @secondary;
 			background: @base;
 			&:focus{
@@ -72,6 +72,26 @@ html, body{height: 100%}
 				transition: background-color .5s ease;
 			}
 			@media (max-width: @screen-xs-max){display: none}
+		}
+		form{
+			position: relative;
+			float: left;
+			clear: both;
+			button{
+				background: none;
+				border: none;
+				outline: 0;
+				font-size: 12px;
+				position: absolute;
+				right: 24px;
+				height: 100%;
+				top: 0;
+				padding: 0;
+				i{.fa-mixin-icon(search)}
+			}
+			input:focus + button{
+				i{color: @base}
+			}
 		}
 		.show-sidebar{
 			float: right;
@@ -207,6 +227,8 @@ html, body{height: 100%}
 				padding: 10px;
 				text-decoration: none;
 				transition: padding-left .5s ease;
+				border-top: 1px solid @base;
+				border-bottom: 1px solid @base;
 				&:before{
 					content: ">";
 					color: @secondary;
