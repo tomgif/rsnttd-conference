@@ -10,38 +10,38 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     pngquant = require('imagemin-pngquant'),
     rimraf = require('rimraf'),
+    jade = require('gulp-jade'),
     browserSync = require("browser-sync"),
-    reload = browserSync.reload,
-    deploy = require('gulp-gh-pages');
+    reload = browserSync.reload;
 
 var path = {
-    build: { //Тут мы укажем куда складывать готовые после сборки файлы
-        html: 'build/',
-        js: 'build/js/',
-        css: 'build/css/',
-        img: 'build/img/',
-        fonts: 'build/fonts/'
+    build: {
+        jade: 'dist/',
+        js: 'dist/js/',
+        css: 'dist/css/',
+        img: 'dist/img/',
+        fonts: 'dist/fonts/'
     },
-    src: { //Пути откуда брать исходники
-        html: 'src/*.html', //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
-        js: 'src/js/main.js',//В стилях и скриптах нам понадобятся только main файлы
+    src: {
+        jade: 'src/*.jade',
+        js: 'src/js/main.js',
         style: 'src/css/main.less',
-        img: 'src/img/**/*.*', //Синтаксис img/**/*.* означает - взять все файлы всех расширений из папки и из вложенных каталогов
+        img: 'src/img/**/*.*',
         fonts: 'src/fonts/**/*.*'
     },
-    watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
-        html: 'src/**/*.html',
+    watch: {
+        jade: 'src/**/*.jade',
         js: 'src/js/**/*.js',
         style: 'src/css/**/*.less',
         img: 'src/img/**/*.*',
         fonts: 'src/fonts/**/*.*'
     },
-    clean: './build'
+    clean: './dist'
 };
 
 var config = {
     server: {
-        baseDir: "./build"
+        baseDir: "./dist"
     },
     tunnel: true,
     host: 'localhost',
@@ -49,39 +49,42 @@ var config = {
     logPrefix: "Frontend_Devil"
 };
 
-gulp.task('html:build', function () {
-    gulp.src(path.src.html) //Выберем файлы по нужному пути
+gulp.task('jade:build', function () {
+    gulp.src(path.src.jade)
         .pipe(rigger())
-        .pipe(gulp.dest(path.build.html)) //Выплюнем их в папку build
-        .pipe(reload({stream: true})); //И перезагрузим наш сервер для обновлений
+        .pipe(jade({
+            pretty: true
+        }))
+        .pipe(gulp.dest(path.build.jade))
+        .pipe(reload({stream: true}));
 });
 
 gulp.task('js:build', function () {
-    gulp.src(path.src.js) //Найдем наш main файл
-        .pipe(rigger()) //Прогоним через rigger
-        .pipe(uglify()) //Сожмем наш js
-        .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
-        .pipe(reload({stream: true})); //И перезагрузим сервер
+    gulp.src(path.src.js)
+        .pipe(rigger())
+        .pipe(uglify())
+        .pipe(gulp.dest(path.build.js))
+        .pipe(reload({stream: true}));
 });
 
 gulp.task('css:build', function () {
-    gulp.src(path.src.style) //Выберем наш main.scss
-        .pipe(less()) //Скомпилируем
-        .pipe(prefixer()) //Добавим вендорные префиксы
-        .pipe(cssmin()) //Сожмем
-        .pipe(gulp.dest(path.build.css)) //И в build
+    gulp.src(path.src.style)
+        .pipe(less())
+        .pipe(prefixer())
+        .pipe(cssmin())
+        .pipe(gulp.dest(path.build.css))
         .pipe(reload({stream: true}));
 });
 
 gulp.task('image:build', function () {
-    gulp.src(path.src.img) //Выберем наши картинки
-        .pipe(imagemin({ //Сожмем их
+    gulp.src(path.src.img)
+        .pipe(imagemin({
             progressive: true,
             svgoPlugins: [{removeViewBox: false}],
             use: [pngquant()],
             interlaced: true
         }))
-        .pipe(gulp.dest(path.build.img)) //И бросим в build
+        .pipe(gulp.dest(path.build.img))
         .pipe(reload({stream: true}));
 });
 
@@ -91,7 +94,7 @@ gulp.task('fonts:build', function() {
 });
 
 gulp.task('build', [
-    'html:build',
+    'jade:build',
     'js:build',
     'css:build',
     'fonts:build',
@@ -99,9 +102,9 @@ gulp.task('build', [
 ]);
 
 gulp.task('watch', function(){
-    watch([path.watch.html], function(event, cb) {
-        gulp.start('html:build');
-    });
+    watch([path.watch.jade], function(event, cb) {
+        gulp.start('jade:build');
+    }, ['jade']);
     watch([path.watch.style], function(event, cb) {
         gulp.start('css:build');
     });
@@ -122,14 +125,6 @@ gulp.task('webserver', function () {
 
 gulp.task('clean', function (cb) {
     rimraf(path.clean, cb);
-});
-
-/**
- * Push build to gh-pages
- */
-gulp.task('deploy', function () {
-  return gulp.src("./build/**/*")
-    .pipe(deploy())
 });
 
 gulp.task('default', ['build', 'webserver', 'watch']);
