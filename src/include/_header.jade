@@ -1,0 +1,32 @@
+.header__strip
+	.header__wrapper
+		.header__row
+			.logo.logo--top
+				a(href="/")
+					img(src="img/logo.png" alt="РОНКТД")
+			.title
+				| 21-ая <span class="text-uppercase">Всероссийская конференция<br>по неразрушающему контролю и технической диагностике<br> 1-3 марта 2017 года <br> Москва, ЦВК Экспоцентр</span>
+			.auth
+				.auth__wrapper
+					a(href="#") Вход
+					a(href="#") Регистрация
+					form(method="post")
+						input.search.search--top(type="text" placeholder="Поиск по сайту")
+						button
+							i
+.carousel__wrapper
+	a.left.carousel-control(href="#carousel" role="button" data-slide="prev")
+		span.glyphicon.glyphicon-chevron-left(aria-hidden="true")
+		span.sr-only Назад
+	#carousel.header__wrapper.carousel.slide(data-ride="carousel")
+		ol.carousel-indicators
+			li.active(data-target="#carousel" data-slide-to="0")
+			li(data-target="#carousel" data-slide-to="1")
+		.carousel-inner(role="listbox")
+			.item.active
+				img(src="img/slide1.jpg" alt="Москва")
+			.item
+				img(src="img/slide2.jpg" alt="Москва")
+	a.right.carousel-control(href="#carousel" role="button" data-slide="next")
+		span.glyphicon.glyphicon-chevron-right(aria-hidden="true")
+		span.sr-only Вперед
