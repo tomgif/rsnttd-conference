@@ -274,6 +274,16 @@ html, body{height: 100%}
 		font-size: 14px;
 		text-indent: 20px;
 	}
+	.button{
+		.btn;
+		.button-variant(#fff, @base, @base);
+		border-radius: 0;
+	}
+	form{
+		input[type=submit], input[type=reset]{.button;}
+		input[type=text], input[type=password], textarea, select{border-radius: 0}		
+	}
+
 	&--left-sidebar{border-left: 250px solid transparent}
 	&--right-sidebar{border-right: 315px solid transparent}
 	&__wrapper{
@@ -447,5 +457,28 @@ html, body{height: 100%}
 	.content--left-sidebar .sidebar--right{
 		left: -250px;
 		width: ~"calc(100% + 250px)";	
+	}
+}
+.alert{border-radius: 0}
+.bx-auth-profile{
+	padding: 0 20px;
+	input[type=text], input[type=password], select, textarea{.form-control}
+	.form-group{
+		.make-row();
+		label{
+			.make-lg-column(4);
+			.make-md-column(4);
+			.make-sm-column(4);
+			.make-xs-column(12);
+		}
+		label + div{
+			.make-lg-column(8);
+			.make-md-column(8);
+			.make-sm-column(8);
+			.make-xs-column(12);
+		}
+	}
+	.profile-link{
+		.text-uppercase;
 	}
 }
